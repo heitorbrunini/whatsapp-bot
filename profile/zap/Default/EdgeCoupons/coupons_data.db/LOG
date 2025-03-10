@@ -1,0 +1,19 @@
+2025/03/07-10:25:40.228 267c Reusing MANIFEST D:\Programas\PYTHON\whatsapp-bot\profile\zap\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2025/03/07-10:25:40.232 267c Recovering log #42
+2025/03/07-10:25:40.235 267c Level-0 table #44: started
+2025/03/07-10:25:40.277 267c Level-0 table #44: 668456 bytes OK
+2025/03/07-10:25:40.278 267c Recovering log #43
+2025/03/07-10:25:40.279 267c Reusing old log D:\Programas\PYTHON\whatsapp-bot\profile\zap\Default\EdgeCoupons/coupons_data.db/000043.log 
+2025/03/07-10:25:40.432 267c Delete type=0 #42
+2025/03/07-10:25:41.529 3cbc Level-0 table #46: started
+2025/03/07-10:25:41.721 3cbc Level-0 table #46: 668456 bytes OK
+2025/03/07-10:25:41.906 3cbc Delete type=0 #43
+2025/03/07-10:25:41.907 3cbc Compacting 4@0 + 1@1 files
+2025/03/07-10:25:42.067 3cbc Generated table #47@0: 3 keys, 668456 bytes
+2025/03/07-10:25:42.067 3cbc Compacted 4@0 + 1@1 files => 668456 bytes
+2025/03/07-10:25:42.158 3cbc compacted to: files[ 0 1 1 0 0 0 0 ]
+2025/03/07-10:25:42.159 3cbc Delete type=2 #37
+2025/03/07-10:25:42.159 3cbc Delete type=2 #40
+2025/03/07-10:25:42.159 3cbc Delete type=2 #42
+2025/03/07-10:25:42.159 3cbc Delete type=2 #44
+2025/03/07-10:25:42.159 3cbc Delete type=2 #46

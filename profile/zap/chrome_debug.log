@@ -1,0 +1,17 @@
+[15224:16208:0307/102500.886:WARNING:activity_log_policy.cc(68)] Scheduling init
+[15224:16208:0307/102500.886:WARNING:activity_log_policy.cc(68)] Scheduling init
+[14708:13748:0307/102501.331:WARNING:viz_main_impl.cc(85)] VizNullHypothesis is disabled (not a warning)
+[14708:13748:0307/102501.334:ERROR:direct_composition_support.cc(1075)] QueryInterface to IDCompositionDevice4 failed: Não há suporte para esta interface (0x80004002)
+[15224:16208:0307/102502.475:INFO:CONSOLE(158)] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yo/r/ABkdfVRYt2r.js (158)
+[15224:16208:0307/102540.152:WARNING:underside_helper.cc(1521)] If test does not need FrontLoad, this may be expected. SetFrontLoadDecision: 8
+[15224:16208:0307/102540.152:WARNING:wtm_image_web_contents_helper.cc(848)] Favicon request has been preempted. Skipping.  old request_start_time=2025-03-07 13:25:01.198037 UTC, pending_favicon_request_start_time_=2025-03-07 13:25:33.952156 UTC
+[15224:16208:0307/102540.153:WARNING:wtm_image_web_contents_helper.cc(848)] Favicon request has been preempted. Skipping.  old request_start_time=2025-03-07 13:25:02.222584 UTC, pending_favicon_request_start_time_=2025-03-07 13:25:33.952156 UTC
+[15224:16208:0307/102540.153:WARNING:wtm_image_web_contents_helper.cc(848)] Favicon request has been preempted. Skipping.  old request_start_time=2025-03-07 13:25:02.350555 UTC, pending_favicon_request_start_time_=2025-03-07 13:25:33.952156 UTC
+[15224:16208:0307/102540.153:WARNING:wtm_image_web_contents_helper.cc(848)] Favicon request has been preempted. Skipping.  old request_start_time=2025-03-07 13:25:03.028315 UTC, pending_favicon_request_start_time_=2025-03-07 13:25:33.952156 UTC
+[15224:16208:0307/102540.158:ERROR:device_event_log_impl.cc(243)] [10:25:40.158] USB: usb_service_win.cc:445 Failed to parse device interface GUID:
+[14888:16924:0307/102540.282:INFO:extractor_impl.cc(983)] ExtractorImpl::SetIsPendingEEConfig : 1
+[15224:16208:0307/102625.560:WARNING:pref_notifier_impl.cc(41)] Pref observer for video_enhancement.mode found at shutdown.
+[17112:4804:0307/102625.905:WARNING:sqlite_persistent_store_backend_base.cc(202)] Failed to post task from FlushAndNotifyInBackground@net\extras\sqlite\sqlite_persistent_store_backend_base.cc:258 to client_task_runner_.
+[17112:4804:0307/102625.905:WARNING:sqlite_persistent_store_backend_base.cc(202)] Failed to post task from FlushAndNotifyInBackground@net\extras\sqlite\sqlite_persistent_store_backend_base.cc:258 to client_task_runner_.
+[15224:16208:0307/102626.057:WARNING:pref_notifier_impl.cc(41)] Pref observer for browser.touch_mode found at shutdown.
+[15224:16208:0307/102626.057:WARNING:pref_notifier_impl.cc(41)] Pref observer for edge_screenshot.shortcut.main found at shutdown.
