@@ -7,8 +7,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service
 import requests
 
-token_api = "m4LTg1VWn0rcmn6TR0mkVbYpIUpVY7MO"
-
 dir_path = os.getcwd()
 print ("path: " + dir_path)
 edge_options2 = Options()
@@ -27,8 +25,21 @@ driver.get("https://web.whatsapp.com/")
 
 agent = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"}
 
-### uso da API
-#api = requests.get(f"https://editacodigo.com.br/index/api-whatsapp/{token_api}", headers=agent)
+### uso da API para notificação de mensagens
+'''
+token_api = "m4LTg1VWn0rcmn6TR0mkVbYpIUpVY7MO"
+
+api = requests.get(f"https://editacodigo.com.br/index/api-whatsapp/{token_api}", headers=agent)
+api = api.text
+
+api = api.split('.n.')
+bolinha_notificacao = api[3].strip()
+contcaixa_msg = api[5].strip()
+msg_cliente = api[6].strip()
+
+print (f"bolinha: {bolinha_notificacao}")
+
+'''
 
 def bot():
     time.sleep(30) 
@@ -47,17 +58,6 @@ def bot():
         clic_action.click()
         clic_action.perform()
 
-        '''
-        api = requests.get(f"https://editacodigo.com.br/index/api-whatsapp/{token_api}", headers=agent)
-        api = api.text
-
-        api = api.split('.n.')
-        bolinha_notificacao = api[3].strip()
-        contcaixa_msg = api[5].strip()
-        msg_cliente = api[6].strip()
-
-        print (f"bolinha: {bolinha_notificacao}")
-        '''
         #pegar telefone
         time.sleep(1)
         telefone = driver.find_element(By.XPATH, '//*[@id="main"]/header/div[2]/div/div/div/span')
@@ -70,9 +70,20 @@ def bot():
         # todas_mensagens = [e.text for e in mensagem]
         print("mensagem: "+ mensagem[-1].text)
         time.sleep(1)
+
+        #responder
+        campo_resposta = driver.find_element(By.XPATH, '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div[1]/div[2]/div[1]/p')
+        campo_resposta.click()
+        time.sleep(1)
+        campo_resposta.send_keys("Olá, tudo bem? sou um bot desenvolvido em python!", Keys.ENTER)
+        time.sleep(1)
         
     except Exception as e:
         time.sleep(60)
 
-while True:
-    bot()
+try:
+    while True:
+        bot()
+except KeyboardInterrupt as e:
+    print("Fim do programa")
+    driver.quit()
