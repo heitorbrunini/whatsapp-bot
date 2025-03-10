@@ -30,41 +30,43 @@ driver.get("https://web.whatsapp.com/")
 agent = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"}
 classname =  "x1rg5ohu x173ssrc x1xaadd7 x682dto x1e01kqd x12j7j87 x9bpaai x1pg5gke x1s688f xo5v014 x1u28eo4 x2b8uid x16dsc37 x18ba5f9 x1sbl2l xy9co9w x5r174s x7h3shv"
 ### uso da API
+#api = requests.get(f"https://editacodigo.com.br/index/api-whatsapp/{token_api}", headers=agent)
 
-
-#x1rg5ohu x173ssrc x1xaadd7 x682dto x1e01kqd x12j7j87 x9bpaai x1pg5gke x1s688f xo5v014 x1u28eo4 x2b8uid x16dsc37 x18ba5f9 x1sbl2l xy9co9w x5r174s x7h3shv
-time.sleep(60)
 
 def bot():
+    time.sleep(30) 
+    try:        
+        #busca de todas notificações
+        bolinha = driver.find_elements(By.CLASS_NAME, "x7h3shv")
 
-    #busca de todas notificações
-    bolinha = driver.find_elements(By.CLASS_NAME, "x7h3shv")
+        #local da notificação mais recente
+        clica_bolinha = bolinha[-1]
+        clic_action = webdriver.common.action_chains.ActionChains(driver)
 
-    #local da notificação mais recente
-    clica_bolinha = bolinha[-1]
+        #mover mouse para o lado, já que o botão de notificação fica do lado quando aparece o dropdown de opções
+        clic_action.move_to_element_with_offset(clica_bolinha, 0, -20)
 
-    clic_action = webdriver.common.action_chains.ActionChains(driver)
+        #clique e confirmação da ação
+        clic_action.click()
+        clic_action.perform()
 
-    #mover mouse para o lado, já que o botão de notificação fica do lado quando aparece o dropdown de opções
-    clic_action.move_to_element_with_offset(clica_bolinha, 0, -20)
+        '''
+        api = requests.get(f"https://editacodigo.com.br/index/api-whatsapp/{token_api}", headers=agent)
+        api = api.text
 
-    #clique e confirmação da ação
-    clic_action.click()
-    clic_action.perform()
+        api = api.split('.n.')
+        bolinha_notificacao = api[3].strip()
+        contcaixa_msg = api[5].strip()
+        msg_cliente = api[6].strip()
 
-    '''
-    api = requests.get(f"https://editacodigo.com.br/index/api-whatsapp/{token_api}", headers=agent)
-    api = api.text
+        print (f"bolinha: {bolinha_notificacao}")
+        '''
+        #pegar telefone
+        time.sleep(1)
+        telefone = driver.find_element(By.XPATH, '//*[@id="main"]/header/div[2]/div/div/div/span')
+        print("telefone: "+ telefone.text)
+    except Exception as e:
+        time.sleep(60)
 
-    api = api.split('.n.')
-    bolinha_notificacao = api[3].strip()
-    contcaixa_msg = api[5].strip()
-    msg_cliente = api[6].strip()
-
-    print (f"bolinha: {bolinha_notificacao}")
-    '''
-
-    print(bolinha)
-    time.sleep(120)
-
-bot()
+while True:
+    bot()
