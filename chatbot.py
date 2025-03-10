@@ -7,8 +7,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service
 import requests
 
-
-
 token_api = "m4LTg1VWn0rcmn6TR0mkVbYpIUpVY7MO"
 
 dir_path = os.getcwd()
@@ -28,10 +26,9 @@ driver = webdriver.Edge(service=service, options=edge_options2)
 driver.get("https://web.whatsapp.com/")
 
 agent = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"}
-classname =  "x1rg5ohu x173ssrc x1xaadd7 x682dto x1e01kqd x12j7j87 x9bpaai x1pg5gke x1s688f xo5v014 x1u28eo4 x2b8uid x16dsc37 x18ba5f9 x1sbl2l xy9co9w x5r174s x7h3shv"
+
 ### uso da API
 #api = requests.get(f"https://editacodigo.com.br/index/api-whatsapp/{token_api}", headers=agent)
-
 
 def bot():
     time.sleep(30) 
@@ -64,7 +61,16 @@ def bot():
         #pegar telefone
         time.sleep(1)
         telefone = driver.find_element(By.XPATH, '//*[@id="main"]/header/div[2]/div/div/div/span')
+        #Não funciona com grupos!        
         print("telefone: "+ telefone.text)
+        time.sleep(1)
+
+        #pegar mensagem
+        mensagem = driver.find_elements(By.CLASS_NAME, '_akbu')
+        # todas_mensagens = [e.text for e in mensagem]
+        print("mensagem: "+ mensagem[-1].text)
+        time.sleep(1)
+        
     except Exception as e:
         time.sleep(60)
 
