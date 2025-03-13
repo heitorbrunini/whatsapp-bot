@@ -6,15 +6,17 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service
 import requests
+from ollama import chat
+
 
 dir_path = os.getcwd()
 print ("path: " + dir_path)
 edge_options2 = Options()
-edge_options2.add_argument(f"user-data-dir={dir_path}/PYTHON/whatsapp-bot/profile/zap")
+edge_options2.add_argument(f"user-data-dir={dir_path}/profile/zap")
 
 # Caminho correto do Edge WebDriver
-driver_path = os.path.join(dir_path, "PYTHON", "whatsapp-bot", "msedgedriver.exe")
-print(driver_path)
+driver_path = os.path.join(dir_path, "msedgedriver.exe")
+print("o driver path tá como: " +driver_path)
 
 # Criando o serviço com o caminho do driver
 service = Service(driver_path)
@@ -69,13 +71,25 @@ def bot():
         mensagem = driver.find_elements(By.CLASS_NAME, '_akbu')
         # todas_mensagens = [e.text for e in mensagem]
         print("mensagem: "+ mensagem[-1].text)
+
+        #gerar resposta com ia
+        stream = chat(
+            model='llama3.2',
+            messages=[{'role': 'user', 'content': mensagem[-1].text}],
+            stream=True,
+        )
+
+        response = ""
+        for chunk in stream:
+            response+= (chunk['message']['content'])
+            #print(chunk['message']['content'], end='', flush=True)
         time.sleep(1)
 
         #responder
         campo_resposta = driver.find_element(By.XPATH, '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div[1]/div[2]/div[1]/p')
         campo_resposta.click()
         time.sleep(1)
-        campo_resposta.send_keys("Olá, tudo bem? sou um bot desenvolvido em python!", Keys.ENTER)
+        campo_resposta.send_keys(response, Keys.ENTER)
         time.sleep(1)
 
         #voltar para a tela de conversa
@@ -92,3 +106,4 @@ try:
 except KeyboardInterrupt as e:
     print("Fim do programa")
     driver.quit()
+    exit()
