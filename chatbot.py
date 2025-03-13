@@ -40,9 +40,9 @@ msg_cliente = api[6].strip()
 print (f"bolinha: {bolinha_notificacao}")
 
 '''
-
+time.sleep(60)
 def bot():
-    time.sleep(30) 
+     
     try:        
         #busca de todas notificações
         bolinha = driver.find_elements(By.CLASS_NAME, "x7h3shv")
@@ -77,9 +77,14 @@ def bot():
         time.sleep(1)
         campo_resposta.send_keys("Olá, tudo bem? sou um bot desenvolvido em python!", Keys.ENTER)
         time.sleep(1)
+
+        #voltar para a tela de conversa
+        webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+
         
     except Exception as e:
-        time.sleep(60)
+        time.sleep(10)
+        print("Aguardando notificação...")
 
 try:
     while True:
