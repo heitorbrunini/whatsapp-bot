@@ -11,4 +11,4 @@ for chunk in stream:
   response+= (chunk['message']['content'])
   #print(chunk['message']['content'], end='', flush=True)
 
-print(var)
+print(response)
