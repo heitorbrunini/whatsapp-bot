@@ -5,7 +5,7 @@ from selenium.webdriver.edge.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service
-import requests
+#import requests
 from ollama import chat
 
 
@@ -16,7 +16,6 @@ edge_options2.add_argument(f"user-data-dir={dir_path}/profile/zap")
 
 # Caminho correto do Edge WebDriver
 driver_path = os.path.join(dir_path, "msedgedriver.exe")
-print("o driver path tá como: " +driver_path)
 
 # Criando o serviço com o caminho do driver
 service = Service(driver_path)
@@ -25,10 +24,9 @@ driver = webdriver.Edge(service=service, options=edge_options2)
 # Acessando o WhatsApp Web
 driver.get("https://web.whatsapp.com/")
 
-agent = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"}
-
 ### uso da API para notificação de mensagens
 '''
+agent = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"}
 token_api = "m4LTg1VWn0rcmn6TR0mkVbYpIUpVY7MO"
 
 api = requests.get(f"https://editacodigo.com.br/index/api-whatsapp/{token_api}", headers=agent)
