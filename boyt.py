@@ -1,6 +1,7 @@
 # Step 1: Importando as bibliotecas necessárias
 from selenium import webdriver
 import time
+import pandas as pd
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.options import Options
@@ -22,6 +23,11 @@ driver_path = os.path.join(dir_path, "msedgedriver.exe")
 # Criando o serviço com o caminho do driver
 service = Service(driver_path)
 driver = webdriver.Edge(service=service, options=edge_options2)
+
+#Lendo o arquivo de respostas
+df = pd.read_csv('msg.csv', sep=';', header=None, names=['ID', 'Mensagem'])
+# Converter a coluna ID para int (caso venha como string)
+df['ID'] = df['ID'].astype(int)
 
 # Step 3: Acessando o WhatsApp Web
 driver.get("https://web.whatsapp.com/")
@@ -72,14 +78,22 @@ def enviar_mensagem(response):
     #voltar para a tela de conversa
     webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
 
-try:
-    while True:
+def obter_resposta(id_mensagem):
+    #Retorna a mensagem correspondente ao ID fornecido.
+    
+    #Filtra a linha correspondente ao ID e pega a coluna 'Mensagem'
+    resposta = df[df['ID'] == id_mensagem]['Mensagem']
+    return resposta.iloc[0] if not resposta.empty else "Desculpe, não encontrei essa mensagem."
+
+
+while True:
+    try:
         busca_notificação()
         print("telefone: "+ capturar_contato())
         print("mensagem: "+ capturar_mensagem())
         enviar_mensagem("Olá, tudo bem? sou um bot desenvolvido em Python!")
         time.sleep(5)
-except KeyboardInterrupt as e:
-    print("Fim do programa")
-    driver.quit()
-    exit()
+    except KeyboardInterrupt as e:
+        print("Fim do programa")
+        driver.quit()
+        exit()
