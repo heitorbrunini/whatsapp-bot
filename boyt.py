@@ -34,6 +34,7 @@ driver.get("https://web.whatsapp.com/")
 
 # Step 4: Mantendo o navegador aberto por 30 segundos
 time.sleep(30)
+print("Tempo de espera encerrado")
 
 def busca_notificação():
     try: 
@@ -46,6 +47,10 @@ def busca_notificação():
 
         #mover mouse para o lado, já que o botão de notificação fica do lado quando aparece o dropdown de opções
         clic_action.move_to_element_with_offset(clica_bolinha, 0, -20)
+
+        #clique e confirmação da ação
+        clic_action.click()
+        clic_action.perform()
 
         time.sleep(3)
     except Exception as e:
@@ -66,17 +71,13 @@ def capturar_mensagem():
     return mensagem[-1].text
 
 def enviar_mensagem(response):
-    #buscando campo de resposta
+    #responder
     campo_resposta = driver.find_element(By.XPATH, '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div[1]/div[2]/div[1]/p')
     campo_resposta.click()
     time.sleep(1)
 
-    #digitando e enviando a resposta
     campo_resposta.send_keys(response, Keys.ENTER)
     time.sleep(1)
-
-    #voltar para a tela de conversa
-    webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
 
 def obter_resposta(id_mensagem):
     #Retorna a mensagem correspondente ao ID fornecido.
@@ -91,7 +92,7 @@ while True:
         busca_notificação()
         print("telefone: "+ capturar_contato())
         print("mensagem: "+ capturar_mensagem())
-        enviar_mensagem("Olá, tudo bem? sou um bot desenvolvido em Python!")
+        enviar_mensagem(obter_resposta(1))
         time.sleep(5)
     except KeyboardInterrupt as e:
         print("Fim do programa")
