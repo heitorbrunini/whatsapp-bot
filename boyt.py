@@ -33,10 +33,10 @@ df['ID'] = df['ID'].astype(int)
 driver.get("https://web.whatsapp.com/")
 
 # Step 4: Mantendo o navegador aberto por 30 segundos
-time.sleep(30)
+time.sleep(60)
 print("Tempo de espera encerrado")
 
-def busca_notificação():
+def busca_notificacao():
     try: 
         #busca de todas notificações
         bolinha = driver.find_elements(By.CLASS_NAME, "x7h3shv")
@@ -87,14 +87,53 @@ def obter_resposta(id_mensagem):
     return resposta.iloc[0] if not resposta.empty else "Desculpe, não encontrei essa mensagem."
 
 
+def salvar_contato(numero):
+    arquivo = "ctt.csv"
+
+    # Ler o CSV
+    df = pd.read_csv(arquivo, sep=";")
+    
+    # Verificar se o número já está cadastrado
+    if numero in df["Numero"].values:
+        print("Numero já cadastrado!")
+        return
+    
+    # Gerar um novo ID (incremental)
+    novo_id = df["ID"].max() + 1 if not df.empty else 1
+    
+    # Criar um novo DataFrame com o contato
+    novo_contato = pd.DataFrame([[novo_id, numero]], columns=["ID", "Numero"])
+    
+    # Adicionar ao arquivo CSV
+    novo_contato.to_csv(arquivo, mode="a", header=False, index=False)
+    
+    print(f"Numero {numero} salvo com sucesso!")
+
 while True:
     try:
-        busca_notificação()
-        print("telefone: "+ capturar_contato())
-        print("mensagem: "+ capturar_mensagem())
-        enviar_mensagem(obter_resposta(1))
+        # Passo 1: Verificar notificações e abrir conversa
+        busca_notificacao()
+
+        # Passo 2: Capturar dados da conversa
+        telefone = capturar_contato()
+        salvar_contato(telefone)
+        mensagem_recebida = capturar_mensagem()
+
+        print(f"Telefone: {telefone}")
+        print(f"Mensagem: {mensagem_recebida}")
+
+        # Passo 3: Buscar resposta correspondente e enviar mensagem
+        resposta = obter_resposta(mensagem_recebida)
+        print(f"Resposta: {resposta}")
+        enviar_mensagem(resposta)
+
+        # Passo 4: Aguardar antes de verificar novas mensagens
         time.sleep(5)
-    except KeyboardInterrupt as e:
+
+    except KeyboardInterrupt:
         print("Fim do programa")
         driver.quit()
         exit()
+    except Exception as e:
+        print("aguardando carregamento...")
+        time.sleep(20)

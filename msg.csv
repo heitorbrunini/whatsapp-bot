@@ -1,4 +1,4 @@
-1; Olá! Bem-vindo à Lanchonete do Chatbot! Como posso te ajudar?
+1; Olá! Bem-vindo à Lanchonete do Chatbot! Deseja ver nosso cardápio (S/N)?
 2; Aqui está nosso cardápio:\n1️⃣ X-Burguer - R$12,00\n2️⃣ X-Salada - R$14,00\n3️⃣ X-Bacon - R$16,00\n4️⃣ X-Tudo - R$18,00\n5️⃣ Batata P - R$8,00\n6️⃣ Batata G - R$12,00\n7️⃣ Refri - R$6,00\n8️⃣ Suco - R$8,00
 3; Para fazer um pedido, envie o número do item desejado. Exemplo: "Quero um X-Bacon" ou "Gostaria do item 3".
 4; Ótima escolha! Quantas unidades você deseja?
@@ -6,3 +6,4 @@
 6; Obrigado! Seu pedido está a caminho. Tempo estimado: 30 minutos. 🚀
 7; O pagamento pode ser feito via PIX ou dinheiro na entrega. Qual você prefere?
 8; Muito obrigado pela preferência! Se precisar de algo mais, estou à disposição. 😊
+9; Desculpe, não entendi. Poderia repetir, por favor?
