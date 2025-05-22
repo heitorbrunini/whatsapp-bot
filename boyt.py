@@ -4,7 +4,6 @@ import time
 import pandas as pd
 from datetime import datetime
 
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.edge.service import Service
@@ -88,7 +87,6 @@ def obter_resposta(id_mensagem):
     resposta = df[df['ID'] == id_mensagem]['Mensagem']
     return resposta.iloc[0] if not resposta.empty else "Desculpe, não encontrei essa mensagem."
 
-
 def salvar_contato(numero):
     arquivo = "ctt.csv"
 
@@ -130,7 +128,6 @@ def enviar_mensagem_numero(numero, mensagem):
     cancel_search.click()
     webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
 
-# Função para processar os agendamentos e enviar mensagens
 def processar_agendamentos():
     arquivo = "agendamentos.xlsx"
 
@@ -159,7 +156,6 @@ def processar_agendamentos():
 
     print("Processo concluído!")
 
-
 while True:
     try:
         '''
@@ -179,8 +175,7 @@ while True:
         print(f"Resposta: {resposta}")
         enviar_mensagem(resposta)
         
-        '''
-      
+        '''      
 
         # Passo 4: Aguardar antes de verificar novas mensagens
         time.sleep(5)        
