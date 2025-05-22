@@ -2,6 +2,8 @@
 from selenium import webdriver
 import time
 import pandas as pd
+from datetime import datetime
+
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.options import Options
@@ -109,9 +111,59 @@ def salvar_contato(numero):
     
     print(f"Numero {numero} salvo com sucesso!")
 
+def enviar_mensagem_numero(numero, mensagem):
+    # Buscar contato na barra de pesquisa
+    search_box = driver.find_element(By.XPATH, '//*[@id="side"]/div[1]/div/div[2]/div/div/div/p')
+    search_box.click()
+    search_box.send_keys(numero)  # Digita o número do contato
+    time.sleep(2)  # Aguarda carregar os resultados
+    search_box.send_keys(Keys.ENTER)  # Entra na conversa
+        
+    # Aguardar a conversa abrir
+    time.sleep(2)
+    
+    enviar_mensagem(mensagem)
+    print(f"Mensagem enviada para {numero} com sucesso!")
+    
+    # sair da pesquisa com xpath: 
+    cancel_search = driver.find_element(By.XPATH, '//*[@id="side"]/div[1]/div/div[2]/span/button')
+    cancel_search.click()
+    webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+
+# Função para processar os agendamentos e enviar mensagens
+def processar_agendamentos():
+    arquivo = "agendamentos.xlsx"
+
+    # Ler o arquivo Excel
+    df = pd.read_excel(arquivo)
+
+    # Obter a data atual no formato correto
+    data_atual = datetime.now().strftime("%d/%m/%Y")
+
+    # Percorrer as linhas
+    for i, row in df.iterrows():
+        contato = row["contato"]
+        data_agendada = row["data"].strftime("%d/%m/%Y")
+        mensagem = row["mensagem"]
+        enviada = row["enviada"]
+
+        # Verificar se a data agendada é hoje e se ainda não foi enviada
+        if data_agendada == data_atual and not enviada:
+            enviar_mensagem_numero(contato, mensagem)
+
+            # Atualizar a coluna "enviada" para True
+            df.at[i, "enviada"] = True
+
+    # Salvar as alterações no arquivo Excel
+    df.to_excel(arquivo, index=False)
+
+    print("Processo concluído!")
+
+
 while True:
     try:
-        # Passo 1: Verificar notificações e abrir conversa
+        '''
+          # Passo 1: Verificar notificações e abrir conversa
         busca_notificacao()
 
         # Passo 2: Capturar dados da conversa
@@ -126,9 +178,14 @@ while True:
         resposta = obter_resposta(mensagem_recebida)
         print(f"Resposta: {resposta}")
         enviar_mensagem(resposta)
+        
+        '''
+      
 
         # Passo 4: Aguardar antes de verificar novas mensagens
-        time.sleep(5)
+        time.sleep(5)        
+
+        processar_agendamentos() # Substitua pelo número desejado e pela mensagem        
 
     except KeyboardInterrupt:
         print("Fim do programa")
