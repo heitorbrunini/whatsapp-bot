@@ -8,6 +8,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 import os
 
@@ -26,7 +28,7 @@ service = Service(driver_path)
 driver = webdriver.Edge(service=service, options=edge_options2)
 
 #Lendo o arquivo de respostas
-df = pd.read_csv('msg.csv', sep=';', header=None, names=['ID', 'Mensagem'])
+df = pd.read_csv(f"{dir_path}/bot/resources/msg.csv", sep=';', header=None, names=['ID', 'Mensagem'])
 # Converter a coluna ID para int (caso venha como string)
 df['ID'] = df['ID'].astype(int)
 
@@ -34,7 +36,7 @@ df['ID'] = df['ID'].astype(int)
 driver.get("https://web.whatsapp.com/")
 
 # Step 4: Mantendo o navegador aberto por 30 segundos
-time.sleep(60)
+time.sleep(30)
 print("Tempo de espera encerrado")
 
 def busca_notificacao():
@@ -73,11 +75,14 @@ def capturar_mensagem():
 
 def enviar_mensagem(response):
     #responder
-    campo_resposta = driver.find_element(By.XPATH, '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div[1]/div[2]/div[1]/p')
+    campo_resposta = driver.find_element(By.XPATH, '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div/div[3]/div[1]/p')
     campo_resposta.click()
+    print("[INFO] Campo de resposta encontrado")
     time.sleep(1)
 
+    print(f"[INFO] Enviando mensagem: {response}")
     campo_resposta.send_keys(response, Keys.ENTER)
+    print(f"[INFO] Mensagem enviada: {response}")
     time.sleep(1)
 
 def obter_resposta(id_mensagem):
@@ -88,7 +93,7 @@ def obter_resposta(id_mensagem):
     return resposta.iloc[0] if not resposta.empty else "Desculpe, não encontrei essa mensagem."
 
 def salvar_contato(numero):
-    arquivo = "ctt.csv"
+    arquivo = f"{dir_path}/bot/resources/ctt.csv"
 
     # Ler o CSV
     df = pd.read_csv(arquivo, sep=";")
@@ -113,6 +118,7 @@ def enviar_mensagem_numero(numero, mensagem):
     # Buscar contato na barra de pesquisa
     search_box = driver.find_element(By.XPATH, '//*[@id="side"]/div[1]/div/div[2]/div/div/div/p')
     search_box.click()
+    
     search_box.send_keys(numero)  # Digita o número do contato
     time.sleep(2)  # Aguarda carregar os resultados
     search_box.send_keys(Keys.ENTER)  # Entra na conversa
@@ -123,43 +129,40 @@ def enviar_mensagem_numero(numero, mensagem):
     enviar_mensagem(mensagem)
     print(f"Mensagem enviada para {numero} com sucesso!")
     
-    # sair da pesquisa com xpath: 
-    cancel_search = driver.find_element(By.XPATH, '//*[@id="side"]/div[1]/div/div[2]/span/button')
-    cancel_search.click()
-    webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
-
+    # Aguarda até que o botão "cancelar pesquisa" esteja presente
+    try:
+        cancel_search = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="side"]/div[1]/div/div[2]/span/button/span'))
+        )
+        cancel_search.click()
+    except Exception as e:
+        print(f"Botão de cancelar pesquisa não encontrado: {e}")
 def processar_agendamentos():
-    arquivo = "agendamentos.xlsx"
+    arquivo = f"{dir_path}/bot/resources/agendamentos.xlsx"
 
-    # Ler o arquivo Excel
+    # Ler o Excel e depois converter a coluna de data corretamente
     df = pd.read_excel(arquivo)
+    df["data"] = pd.to_datetime(df["data"], dayfirst=True)
 
-    # Obter a data atual no formato correto
     data_atual = datetime.now().strftime("%d/%m/%Y")
 
-    # Percorrer as linhas
     for i, row in df.iterrows():
         contato = row["contato"]
         data_agendada = row["data"].strftime("%d/%m/%Y")
         mensagem = row["mensagem"]
         enviada = row["enviada"]
 
-        # Verificar se a data agendada é hoje e se ainda não foi enviada
         if data_agendada == data_atual and not enviada:
             enviar_mensagem_numero(contato, mensagem)
-
-            # Atualizar a coluna "enviada" para True
+            print(f"[INFO] Mensagem agendada para {contato} para hoje: ({data_agendada})")
             df.at[i, "enviada"] = True
 
-    # Salvar as alterações no arquivo Excel
     df.to_excel(arquivo, index=False)
-
-    print("Processo concluído!")
 
 while True:
     try:
         '''
-          # Passo 1: Verificar notificações e abrir conversa
+        # Passo 1: Verificar notificações e abrir conversa
         busca_notificacao()
 
         # Passo 2: Capturar dados da conversa
@@ -188,4 +191,5 @@ while True:
         exit()
     except Exception as e:
         print("aguardando carregamento...")
+        print(e)
         time.sleep(20)
