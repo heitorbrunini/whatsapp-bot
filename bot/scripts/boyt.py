@@ -11,6 +11,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from model_requests import get_llm_response  # Importa a função de interação com o modelo LLM
+from model_requests import clean_response  # Importa a função de limpeza de resposta
+
 import os
 
 # Step 2: Configurando o WebDriver
@@ -92,6 +95,10 @@ def obter_resposta(id_mensagem):
     resposta = df[df['ID'] == id_mensagem]['Mensagem']
     return resposta.iloc[0] if not resposta.empty else "Desculpe, não encontrei essa mensagem."
 
+def obter_resposta_llm(mensagem , model_name='pizzaria_deepseek:latest', conversation_history=[]):
+    #Retorna a mensagem gerada pelo modelo LLM com base na mensagem fornecida.
+    return clean_response(get_llm_response(mensagem, model_name=model_name, conversation_history=conversation_history))
+
 def salvar_contato(numero):
     arquivo = f"{dir_path}/bot/resources/ctt.csv"
 
@@ -137,18 +144,19 @@ def enviar_mensagem_numero(numero, mensagem):
         cancel_search.click()
     except Exception as e:
         print(f"Botão de cancelar pesquisa não encontrado: {e}")
+
 def processar_agendamentos():
     arquivo = f"{dir_path}/bot/resources/agendamentos.xlsx"
 
     # Ler o Excel e depois converter a coluna de data corretamente
     df = pd.read_excel(arquivo)
-    df["data"] = pd.to_datetime(df["data"], dayfirst=True)
+    df["data"] = pd.to_datetime(df["data"])
 
-    data_atual = datetime.now().strftime("%d/%m/%Y")
+    data_atual = datetime.now().strftime("%m/%d/%Y")
 
     for i, row in df.iterrows():
         contato = row["contato"]
-        data_agendada = row["data"].strftime("%d/%m/%Y")
+        data_agendada = row["data"].strftime("%m/%d/%Y")
         mensagem = row["mensagem"]
         enviada = row["enviada"]
 
@@ -161,7 +169,6 @@ def processar_agendamentos():
 
 while True:
     try:
-        '''
         # Passo 1: Verificar notificações e abrir conversa
         busca_notificacao()
 
@@ -174,16 +181,17 @@ while True:
         print(f"Mensagem: {mensagem_recebida}")
 
         # Passo 3: Buscar resposta correspondente e enviar mensagem
-        resposta = obter_resposta(mensagem_recebida)
+        conversation_history=[]
+        # antiga resposta gerada pelo csv: resposta = obter_resposta(mensagem_recebida)
+        resposta = obter_resposta_llm(mensagem_recebida , model_name='pizzaria_deepseek:latest', conversation_history=conversation_history)
         print(f"Resposta: {resposta}")
         enviar_mensagem(resposta)
-        
-        '''      
+     
 
         # Passo 4: Aguardar antes de verificar novas mensagens
         time.sleep(5)        
 
-        processar_agendamentos() # Substitua pelo número desejado e pela mensagem        
+        #processar_agendamentos() # Substitua pelo número desejado e pela mensagem        
 
     except KeyboardInterrupt:
         print("Fim do programa")
