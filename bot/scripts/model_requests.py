@@ -5,7 +5,7 @@ def clean_response(content):
     import re
     return re.sub(r'<think>.*?</think>', '', content, flags=re.DOTALL)
 
-def run_chat_interaction(model_name='pizzaria_deepseek:latest'):
+def run_chat_interaction(model_name='pizzaria_gemma:latest'):
     print(f"Iniciando interação com o modelo: {model_name}. Digite 'sair' ou 'exit' para encerrar.")
     
     # Inicializa o histórico da conversa. Isso é importante para manter o contexto.
@@ -44,7 +44,7 @@ def run_chat_interaction(model_name='pizzaria_deepseek:latest'):
             print("Por favor, verifique se o modelo está em execução e acessível.")
             break
 
-def get_llm_response(user_message: str,conversation_history = [], model_name='pizzaria_deepseek:latest') -> str:
+def get_llm_response(user_message: str,conversation_history = [], model_name='pizzaria_gemma:latest') -> str:
     
     # Adiciona a mensagem do usuário ao histórico
     conversation_history.append({'role': 'user', 'content': user_message})
@@ -75,6 +75,4 @@ def get_llm_response(user_message: str,conversation_history = [], model_name='pi
 
 # Para iniciar a interação, chame a função:
 if __name__ == "__main__":
-    response = get_llm_response("Olá com quem eu falo?")
-    print(f"Resposta do Freddy: {clean_response (response)}")
-    #run_chat_interaction()
+    run_chat_interaction()

@@ -1,0 +1,10 @@
+{
+  "cliente": "Irinaldo Junior",
+  "itens": [
+    { "produto": "Pizza Frango com Catupiry", "tamanho": "Média", "quantidade": 1, "preco": 36 },
+    { "produto": "Suco Natural de Uva", "tamanho": "500ml", "quantidade": 1, "preco": 7 }
+  ],
+  "endereco": "Rua General Osório, 12, bairro 40",
+  "forma_pagamento": "Pix",
+  "observacoes": ""
+}
