@@ -1,10 +1,9 @@
 {
-  "cliente": "Irinaldo Junior",
+  "cliente": "Junior",
   "itens": [
-    { "produto": "Pizza Frango com Catupiry", "tamanho": "MÃ©dia", "quantidade": 1, "preco": 36 },
-    { "produto": "Suco Natural de Uva", "tamanho": "500ml", "quantidade": 1, "preco": 7 }
+    { "produto": "Pizza Calabresa", "tamanho": "Média", "quantidade": 1, "preco": 35 },
   ],
-  "endereco": "Rua General OsÃ³rio, 12, bairro 40",
+  "endereco": "Rua Antônio Carlos, Centro, 123",
   "forma_pagamento": "Pix",
   "observacoes": ""
 }
