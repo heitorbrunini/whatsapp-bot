@@ -2,7 +2,7 @@
 
 ## Architecture and Functionality Overview
 
-```markdown
+
 # Feature Analysis: Application Feature
 
 ## 1. Feature Purpose
@@ -42,14 +42,13 @@ The architecture resembles an MVC (Model-View-Controller) pattern:
 
 This modular design ensures maintainability and scalability, allowing independent development and testing of the GUI and bot logic components.
 
-```
 
 ---
 
 ## Detailed Analysis: `app.py`
 > Analysis generated on: 2025-08-18 12:26:05
 
-```markdown
+
 # Technical Analysis: `src/whatsapp-bot/app.py`
 
 ## 1. File's Core Responsibility
@@ -106,5 +105,3 @@ This file is relatively straightforward and does not contain any complex logic. 
 
 ## Summary
 `app.py` is a minimal yet essential file that acts as the entry point for the application. It initializes the PyQt application, sets up the main GUI window, and starts the event loop. While it does not contain complex logic or direct backend communication, its role in orchestrating the application's lifecycle is critical. The modular design, with imports for `MainWindow` and `BotWorker`, ensures separation of concerns and maintainability.
-
-```
