@@ -27,5 +27,13 @@ public class ContactService {
 		
 	}
 	
+	public ContactDTO findOne(Long id) {
+		return new ContactDTO(repository.findById(id).get());
+	}
+	
+	public void remove(ContactDTO dto) {
+		repository.deleteById(dto.id());
+	}
+	
 	
 }
