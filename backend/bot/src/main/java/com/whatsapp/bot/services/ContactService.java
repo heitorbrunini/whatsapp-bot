@@ -16,6 +16,12 @@ public class ContactService {
 	@Autowired
 	private ContactRepository repository;
 	
+	public ContactDTO save(Contact ctt) {
+		repository.save(ctt);
+		
+		return new ContactDTO(ctt);
+	}
+	
 	public List<ContactDTO> findAll(){
 		
 		List<ContactDTO> dtos = new ArrayList<>(); 

@@ -17,6 +17,14 @@ public class AppointmentService {
 	@Autowired
 	private AppointmentRepository repository;
 	
+	public AppointmentDTO save(Appointment data) {
+		
+		repository.saveAndFlush(data);
+		
+		return new AppointmentDTO(data);
+
+	}
+	
 	public List<AppointmentDTO> findAll(){
 		List<AppointmentDTO> dtos = new ArrayList<>();
 		List<Appointment> data = repository.findAll();
