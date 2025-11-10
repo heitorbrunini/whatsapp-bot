@@ -38,18 +38,22 @@ public class OrderService {
 		return new OrderDTO (repository.findById(id).get());
 	}
 	
-	public OrderDTO update(OrderDTO dto) {
+	public OrderDTO update(Order order) {
 		
-		Order data = repository.findById(dto.id()).get();
+		Order data = repository.findById(order.getId()).get();
 		
-		data.setClientName(dto.clientName());
-		data.setAddress(dto.address());
-		data.setPaymentMethod(dto.paymentMethod());
-		data.setObservations(dto.observations());
+		data.setClientName(order.getClientName());
+		data.setAddress(order.getAddress());
+		data.setPaymentMethod(order.getPaymentMethod());
+		data.setObservations(order.getObservations());
 		
 		repository.saveAndFlush(data);
 		
 		return new OrderDTO (data);
+	}
+	
+	public void remove(Long id) {
+		repository.deleteById(id);
 	}
 	
 

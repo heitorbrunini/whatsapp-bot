@@ -33,6 +33,13 @@ public class ContactService {
 		
 	}
 	
+	public ContactDTO update(Contact ctt){
+		Contact data = repository.findById(ctt.getId()).get();
+		data.setName(ctt.getName());
+		repository.saveAndFlush(data);
+		return new ContactDTO(data);
+	}
+	
 	public ContactDTO findOne(Long id) {
 		return new ContactDTO(repository.findById(id).get());
 	}
