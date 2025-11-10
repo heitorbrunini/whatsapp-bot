@@ -60,6 +60,8 @@ class BotWorker(QThread):
                         json_data = resposta.split("GERAR_JSON:")[1].strip()
                         with open(f"{os.getcwd()}/bot/resources/response.json", "w") as json_file:
                             json_file.write(json_data)
+                            
+                        #TODO: Chamar a api aqui para enviar o JSON
                         self.nova_mensagem_log.emit("[INFO] Arquivo JSON gerado com sucesso!")
                         self.novo_pedido.emit("004", "Lasanha 4 Queijos, Guaraná 1L")
                         enviar_mensagem("Pedido registrado com sucesso! Em breve entraremos em contato com o status.",driver=self.driver)
