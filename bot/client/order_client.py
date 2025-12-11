@@ -1,5 +1,16 @@
 from .base_client import BaseClient
 
+'''
+{
+  "cliente": "Junior",
+  "itens": [
+    { "produto": "Pizza Calabresa", "tamanho": "M�dia", "quantidade": 1, "preco": 35 },
+  ],
+  "endereco": "Rua Ant�nio Carlos, Centro, 123",
+  "forma_pagamento": "Pix",
+  "observacoes": ""
+}
+'''
 class OrderClient(BaseClient):
     """Cliente para os endpoints de OrderController"""
 

@@ -1,3 +1,1 @@
-import requests
-
 BASE_URL = "http://localhost:8080"  # URL base da API Java Spring Boot

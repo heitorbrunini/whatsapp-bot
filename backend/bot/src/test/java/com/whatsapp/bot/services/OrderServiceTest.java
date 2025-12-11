@@ -97,7 +97,7 @@ class OrderServiceTest {
         order.setPaymentMethod("Cartão");
         order.setObservations("Nenhuma");
 
-        OrderDTO dto = new OrderDTO(10L, "Paulo", "Rua Nova", "PIX", "Com gelo", null);
+        Order dto = new Order(10L, "Paulo", "Rua Nova", "PIX", "Com gelo", null);
 
         when(orderRepository.findById(10L)).thenReturn(Optional.of(order));
         when(orderRepository.saveAndFlush(any(Order.class))).thenReturn(order);

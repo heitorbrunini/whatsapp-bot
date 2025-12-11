@@ -1,9 +1,9 @@
 {
-  "cliente": "Junior",
-  "itens": [
-    { "produto": "Pizza Calabresa", "tamanho": "Média", "quantidade": 1, "preco": 35 },
+  "clientName": "Junior",
+  "items": [
+    { "produto": "Pizza Calabresa", "tamanho": "Media", "quantidade": 1, "preco": 35 }
   ],
-  "endereco": "Rua Antônio Carlos, Centro, 123",
-  "forma_pagamento": "Pix",
-  "observacoes": ""
+  "address": "Rua Antonio Carlos, Centro, 123",
+  "paymentMethod": "Pix",
+  "observations": ""
 }
